@@ -97,7 +97,7 @@
 
    [MODULE_SELECTION]
       Touched = 1
-      mode_of_hydrodynamic_module = 2
+      mode_of_hydrodynamic_module = 1
       hydrodynamic_features = 1
       fluid_property = 1
       mode_of_spectral_wave_module = 0

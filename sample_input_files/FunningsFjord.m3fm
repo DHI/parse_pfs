@@ -1,6 +1,6 @@
-// Created     : 2023-09-20 12:36:14
+// Created     : 2024-06-13 17:17:52
 // DLL         : C:\Program Files (x86)\DHI\MIKE Zero\2024\bin\x64\pfs2004.dll
-// Version     : 22.0.3.17261
+// Version     : 22.0.3.17314
 
 [FemEngineHD]
    [DOMAIN]
@@ -107,10 +107,10 @@
       fluid_property = 1
       mode_of_spectral_wave_module = 0
       mode_of_transport_module = 2
-      mode_of_mud_transport_module = 0
-      mode_of_eco_lab_module = 0
-      mode_of_sand_transport_module = 0
-      mode_of_particle_tracking_module = 0
+      mode_of_mud_transport_module = 2
+      mode_of_eco_lab_module = 2
+      mode_of_sand_transport_module = 2
+      mode_of_particle_tracking_module = 2
       mode_of_oil_spill_module = 0
       mode_of_shoreline_module = 0
    EndSect  // MODULE_SELECTION
@@ -118,7 +118,7 @@
    [HYDRODYNAMIC_MODULE]
       mode = 2
       [EQUATION]
-         formulation = 4
+         formulation = 2
       EndSect  // EQUATION
 
       [TIME]
@@ -128,20 +128,20 @@
 
       [SOLUTION_TECHNIQUE]
          Touched = 1
-         scheme_of_time_integration = 1
-         scheme_of_space_discretization_horizontal = 1
-         scheme_of_space_discretization_vertical = 1
+         scheme_of_time_integration = 2
+         scheme_of_space_discretization_horizontal = 2
+         scheme_of_space_discretization_vertical = 3
          method_of_space_discretization_horizontal = 0
-         type_of_filtering = 0
+         type_of_filtering = 1
          filtering_coefficient = 0.001
-         type_of_Riemann_solver = 3
+         type_of_Riemann_solver = 0
          Riemann_factor = 1.0
          CFL_critical_HD = 0.8
          dt_min_HD = 0.01
          dt_max_HD = 10.0
-         CFL_critical_AD = 0.8
-         dt_min_AD = 0.01
-         dt_max_AD = 10.0
+         CFL_critical_AD = 0.4
+         dt_min_AD = 0.05
+         dt_max_AD = 11.0
          error_level = 0
          maximum_number_of_errors = 200
          [POISSON_EQUATION]
@@ -180,15 +180,15 @@
 
       [DEPTH]
          Touched = 1
-         type = 0
-         format = 2
+         type = 1
+         format = 3
          file_name = ||
          item_number = 1
       EndSect  // DEPTH
 
       [FLOOD_AND_DRY]
          Touched = 1
-         type = 0
+         type = 2
          drying_depth = 0.005
          mass_depth = 0.1
       EndSect  // FLOOD_AND_DRY
@@ -217,7 +217,7 @@
 
       [DENSITY]
          Touched = 1
-         type = 0
+         type = 2
          temperature_reference = 10.0
          salinity_reference = 32.0
       EndSect  // DENSITY
@@ -226,7 +226,7 @@
          Touched = 1
          [HORIZONTAL_EDDY_VISCOSITY]
             Touched = 1
-            type = 3
+            type = 5
             [CONSTANT_EDDY_FORMULATION]
                Touched = 1
                type = 1
@@ -258,7 +258,7 @@
             EndSect  // SMAGORINSKY_FORMULATION
 
             [K_EPSILON_FORMULATION]
-               Touched = 0
+               Touched = 1
                minimum_eddy_viscosity = 1.8e-06
                maximum_eddy_viscosity = 0.4
             EndSect  // K_EPSILON_FORMULATION
@@ -267,11 +267,11 @@
 
          [VERTICAL_EDDY_VISCOSITY]
             Touched = 1
-            type = 5
+            type = 4
             [CONSTANT_EDDY_FORMULATION]
                Touched = 1
                type = 1
-               format = 0
+               format = 2
                constant_value = 0.002
                file_name = ||
                item_number = 1
@@ -280,7 +280,7 @@
                soft_time_interval = 0.0
                reference_value = 0.0
                type_of_time_interpolation = 1
-               Ri_damping = 0
+               Ri_damping = 1
                Ri_a = 10.0
                Ri_b = 0.5
                mixing_length_constants = 0.41, -0.41
@@ -290,7 +290,7 @@
                Touched = 1
                minimum_eddy_viscosity = 1.8e-06
                maximum_eddy_viscosity = 10000000000
-               Ri_damping = 0
+               Ri_damping = 1
                Ri_a = 10.0
                Ri_b = 0.5
                mixing_length_constants = 0.41, -0.41
@@ -308,12 +308,12 @@
 
       [BED_RESISTANCE]
          Touched = 1
-         type = 5
+         type = 7
          zone = 1
          [DRAG_COEFFICIENT]
             Touched = 1
             type = 2
-            format = 0
+            format = 3
             constant_value = 0.01
             file_name = ||
             item_number = 1
@@ -355,7 +355,7 @@
          [ROUGHNESS]
             Touched = 1
             type = 5
-            format = 0
+            format = 3
             constant_value = 0.05
             file_name = ||
             item_number = 1
@@ -378,7 +378,7 @@
             soft_time_interval = 0.0
             reference_value = 0.0
             type_of_time_interpolation = 1
-            type_of_wave_height_correction = 1
+            type_of_wave_height_correction = 0
             wave_height_over_depth_limit = 0.85
             minimum_waterdepth_for_including_waves = 0.0
          EndSect  // WAVE_INDUCED_ROUGHNESS
@@ -387,7 +387,7 @@
 
       [VEGETATION]
          Touched = 1
-         type = 0
+         type = 2
          file_name = ||
          item_number = 1
          item_name = ''
@@ -395,20 +395,22 @@
 
       [CORIOLIS]
          Touched = 1
-         type = 2
+         type = 1
          latitude = 0.0
       EndSect  // CORIOLIS
 
       [WIND_FORCING]
          type = 1
-         format = 1
+         format = 3
          constant_speed = 0.0
          constant_direction = 0.0
          file_name = |.\Wind.dfs0|
-         item_number_for_speed = 1
-         item_number_for_direction = 2
-         item_name_for_speed = 'speed'
-         item_name_for_direction = 'direction'
+         item_number_for_x_velocity = 1
+         item_number_for_y_velocity = 2
+         item_number_for_pressure = 3
+         item_name_for_x_velocity = 'speed'
+         item_name_for_y_velocity = 'direction'
+         item_name_for_pressure = ''
          neutral_pressure = 1013.0
          type_of_soft_start = 2
          soft_time_interval = 7200.0
@@ -426,7 +428,7 @@
 
       [ICE]
          Touched = 1
-         type = 0
+         type = 3
          format = 3
          c_cut_off = 0.9
          file_name = ||
@@ -436,9 +438,9 @@
          item_name_thickness = ''
          [ROUGHNESS]
             Touched = 1
-            type = 0
+            type = 1
             format = 0
-            constant_value = 0.0
+            constant_value = 12.0
             file_name = ||
             item_number = 1
             item_name = ''
@@ -453,7 +455,7 @@
       [TIDAL_POTENTIAL]
          Touched = 1
          MzSEPfsListItemCount = 11
-         type = 0
+         type = 1
          format = 0
          constituent_file_name = ||
          number_of_constituents = 11
@@ -641,7 +643,7 @@
          type_of_evaporation = 0
          [PRECIPITATION]
             Touched = 1
-            type = 1
+            type = 0
             format = 0
             constant_value = 0.0
             file_name = ||
@@ -894,10 +896,10 @@
       EndSect  // BOUNDARY_CONDITIONS
 
       [TEMPERATURE_SALINITY_MODULE]
-         temperature_mode = 0
+         temperature_mode = 2
          salinity_mode = 0
          [EQUATION]
-            Touched = 0
+            Touched = 1
             minimum_temperature = 0.0
             maximum_temperature = 10000000000
             minimum_salinity = 0.0
@@ -905,7 +907,7 @@
          EndSect  // EQUATION
 
          [SOLUTION_TECHNIQUE]
-            Touched = 0
+            Touched = 1
             scheme_of_time_integration = 1
             scheme_of_space_discretization_horizontal = 1
             scheme_of_space_discretization_vertical = 1
@@ -914,7 +916,7 @@
 
          [DIFFUSION]
             [HORIZONTAL_DIFFUSION]
-               Touched = 0
+               Touched = 1
                type = 1
                [SCALED_EDDY_VISCOSITY]
                   format = 0
@@ -935,7 +937,7 @@
             EndSect  // HORIZONTAL_DIFFUSION
 
             [VERTICAL_DIFFUSION]
-               Touched = 0
+               Touched = 1
                type = 1
                [SCALED_EDDY_VISCOSITY]
                   format = 0
@@ -958,7 +960,7 @@
          EndSect  // DIFFUSION
 
          [HEAT_EXCHANGE]
-            Touched = 0
+            Touched = 1
             type = 0
             type_of_latent_heat = 1
             Daltons_law_A = 0.5
@@ -1151,7 +1153,7 @@
          EndSect  // INFILTRATION
 
          [SOURCES]
-            Touched = 0
+            Touched = 1
             MzSEPfsListItemCount = 1
             [SOURCE_1]
                name = 'River'
@@ -1190,7 +1192,7 @@
          EndSect  // SOURCES
 
          [INITIAL_CONDITIONS]
-            Touched = 0
+            Touched = 1
             [TEMPERATURE]
                Touched = 1
                type = 1
@@ -1222,7 +1224,7 @@
          EndSect  // INITIAL_CONDITIONS
 
          [BOUNDARY_CONDITIONS]
-            Touched = 0
+            Touched = 1
             MzSEPfsListItemCount = 1
             [CODE_1]
                [TEMPERATURE]
@@ -1679,6 +1681,10 @@
                V_VELOCITY = 1
                W_VELOCITY = 1
                WS_VELOCITY = 0
+               TOTAL_PRESSURE = 1
+               NON_HYDROSTATIC_PRESURRE = 1
+               DENSITY = 1
+               TEMPERATURE = 1
                TURBULENT_KINETIC_ENERGY = 0
                DISSIPATION_OF_TKE = 0
                CURRENT_SPEED = 0
@@ -1696,11 +1702,12 @@
                domain = 1
                DISCHARGE = 1
                ACCUMULATED_DISCHARGE = 1
-               DISCHARGE_POSITIVE = 0
-               ACCUMULATED_DISCHARGE_POSITIVE = 0
-               DISCHARGE_NEGATIVE = 0
-               ACCUMULATED_DISCHARGE_NEGATIVE = 0
-               FLOW = 0
+               DISCHARGE_POSITIVE = 1
+               ACCUMULATED_DISCHARGE_POSITIVE = 1
+               DISCHARGE_NEGATIVE = 1
+               ACCUMULATED_DISCHARGE_NEGATIVE = 1
+               FLOW = 1
+               TEMPERATURE = 1
             EndSect  // DISCHARGE
 
             [MASSBUDGET]
@@ -1708,6 +1715,7 @@
                DISCHARGE = 1
                ACCUMULATED_DISCHARGE = 1
                FLOW = 1
+               TEMPERATURE = 1
             EndSect  // MASSBUDGET
 
             [INUNDATION]
@@ -1862,6 +1870,10 @@
                V_VELOCITY = 1
                W_VELOCITY = 1
                WS_VELOCITY = 0
+               TOTAL_PRESSURE = 1
+               NON_HYDROSTATIC_PRESURRE = 1
+               DENSITY = 1
+               TEMPERATURE = 1
                TURBULENT_KINETIC_ENERGY = 0
                DISSIPATION_OF_TKE = 0
                CURRENT_SPEED = 0
@@ -1879,11 +1891,12 @@
                domain = 1
                DISCHARGE = 1
                ACCUMULATED_DISCHARGE = 1
-               DISCHARGE_POSITIVE = 0
-               ACCUMULATED_DISCHARGE_POSITIVE = 0
-               DISCHARGE_NEGATIVE = 0
-               ACCUMULATED_DISCHARGE_NEGATIVE = 0
-               FLOW = 0
+               DISCHARGE_POSITIVE = 1
+               ACCUMULATED_DISCHARGE_POSITIVE = 1
+               DISCHARGE_NEGATIVE = 1
+               ACCUMULATED_DISCHARGE_NEGATIVE = 1
+               FLOW = 1
+               TEMPERATURE = 1
             EndSect  // DISCHARGE
 
             [MASSBUDGET]
@@ -1891,6 +1904,7 @@
                DISCHARGE = 1
                ACCUMULATED_DISCHARGE = 1
                FLOW = 1
+               TEMPERATURE = 1
             EndSect  // MASSBUDGET
 
             [INUNDATION]
@@ -2645,14 +2659,14 @@
    EndSect  // TRANSPORT_MODULE
 
    [ECOLAB_MODULE]
-      mode = 0
+      mode = 2
       [TIME]
          start_time_step = 0
          time_step_factor = 1
       EndSect  // TIME
 
       [MODEL_DEFINITION]
-         Touched = 0
+         Touched = 1
          model_definition_file = ||
          template_datetime = ''
          integration_method = 1
@@ -2679,7 +2693,7 @@
    EndSect  // ECOLAB_MODULE
 
    [MUD_TRANSPORT_MODULE]
-      mode = 0
+      mode = 2
       [MODEL_DEFINITION]
          Touched = 0
          number_of_fractions = 1
@@ -3175,7 +3189,7 @@
    EndSect  // MUD_TRANSPORT_MODULE
 
    [SAND_TRANSPORT_MODULE]
-      mode = 0
+      mode = 2
       [MODEL_DEFINITION]
          Touched = 0
          model = 1
@@ -3824,7 +3838,7 @@
    EndSect  // SAND_TRANSPORT_MODULE
 
    [PARTICLE_TRACKING_MODULE]
-      mode = 0
+      mode = 2
       [TIME]
          start_time_step = 0
          time_step_factor = 1
@@ -4079,7 +4093,7 @@
          type_of_space_interpolation = 1
          include_temperature = 0
          include_salinity = 0
-         include_density = 0
+         include_density = 1
          include_wind = 1
       EndSect  // HYDRODYNAMIC_CONDITIONS
 
